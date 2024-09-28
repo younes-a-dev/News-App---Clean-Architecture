@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../locator.dart';
+import '../../data/models/article_model.dart';
 import '../../domain/entities/article_entity.dart';
+import '../bloc/bookmark_bloc/bookmark_bloc.dart';
 
 class ArticleDetailScreen extends StatelessWidget {
   static const routeNamed = '/Article Detail Screen';
@@ -10,7 +14,7 @@ class ArticleDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final article = ModalRoute.of(context)!.settings.arguments as ArticleEntity;
+    final article = ModalRoute.of(context)!.settings.arguments as ArticleModel;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -52,33 +56,28 @@ class ArticleDetailScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             child: Text(
               '${article.description}',
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.grey
-              ),
+              style: const TextStyle(fontSize: 16, color: Colors.grey),
             ),
           ),
-
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             child: Text(
               '${article.content}',
-              style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey
-              ),
+              style: const TextStyle(fontSize: 16, color: Colors.grey),
             ),
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
-        child: Icon(Icons.bookmark_border_rounded),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        onPressed: () {
+          BlocProvider.of<BookmarkBloc>(context).add(SaveArticleEvent(article));
+        },
+         backgroundColor: Colors.white,
+         foregroundColor: Colors.black,
+        child: const Icon(Icons.bookmark_border_rounded),
       ),
     );
   }

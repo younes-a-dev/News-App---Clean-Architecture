@@ -20,14 +20,11 @@ class ArticleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap:(){
-        if(onArticlePressed != null){
+      onTap: () {
+        if (onArticlePressed != null) {
           onArticlePressed!(article!);
         }
       },
-      //     () {
-      //   Navigator.of(context).pushNamed(ArticleDetailScreen.routeNamed, arguments: article);
-      // },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 14),
         height: size.width / 2.2,
@@ -87,23 +84,23 @@ class ArticleWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    isRemovable!
-                        ? GestureDetector(
-                            onTap: () {
-                              if(onRemove != null){
-                                onRemove!(article!);
-                              }
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8),
-                              child: Icon(Icons.remove_circle_outline),
-                            ),
-                          )
-                        : Container(),
                   ],
                 ),
               ),
             ),
+            isRemovable!
+                ? GestureDetector(
+                    onTap: () {
+                      if (onRemove != null) {
+                        onRemove!(article!);
+                      }
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: Icon(Icons.remove_circle_outline,color:Colors.red),
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ),

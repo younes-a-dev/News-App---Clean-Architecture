@@ -24,7 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -43,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: BlocBuilder<HomeBloc, HomeState>(
-        builder: (context, state) {
+        builder: (_, state) {
           if (state.articleStatus is GetArticleLoading) {
             return const Center(child: CircularProgressIndicator(color: Colors.black,strokeWidth: 1,));
           }
@@ -52,11 +51,11 @@ class _HomeScreenState extends State<HomeScreen> {
             final List<ArticleEntity> articles = getArticleCompleted.articles;
             return ListView.builder(
               itemCount: articles.length,
-              itemBuilder: (_, i) {
+              itemBuilder: (context, i) {
                 return ArticleWidget(
                   article: articles[i],
                   onArticlePressed: (article){
-                    Navigator.of(context).pushNamed(ArticleDetailScreen.routeNamed,arguments: article);
+                    Navigator.pushNamed(context,ArticleDetailScreen.routeNamed,arguments: article);
                   },
                 );
               },
